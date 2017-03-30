@@ -10,49 +10,21 @@
             <image src="/images/iqiyi.png" ></image>
         </swiper-item>
     </swiper>
-    <view class="post-container">
-        <view class="post-author-date">
-            <image class="post-author" src="/images/avatar/1.png"></image>
-            <text class="post-date">Nov 25 2017</text>
-        </view>
-        <text class="post-title">正是虾肥蟹壮时</text>
-        <image class="post-image" src="/images/post/crab.png"></image>
-        <text class="post-content">aaaaaaaaaaaaaaaaaaaaaaaaa</text>
-        <view class="post-like">
-            <image class="post-like-image" src="/images/icon/chat.png"></image>
-            <text class="post-like-font">92</text>
-            <image class="post-like-image" src="/images/icon/view.png"></image>
-            <text class="post-like-font">65</text>
-        </view>
-    </view>
+    <block wx:for="{{post_key}}" wx:for-item="item">
      <view class="post-container">
         <view class="post-author-date">
-            <image class="post-author" src="/images/avatar/1.png"></image>
-            <text class="post-date">Nov 25 2017</text>
+            <image class="post-author" src="{{item.author_img}}"></image>
+            <text class="post-date">{{item.date}}</text>
         </view>
-        <text class="post-title">正是虾肥蟹壮时</text>
-        <image class="post-image" src="/images/post/crab.png"></image>
-        <text class="post-content">aaaaaaaaaaaaaaaaaaaaaaaaa</text>
+        <text class="post-title">{{item.title}}</text>
+        <image wx:if="{{item.img_status}}" class="post-image" src="/images/post/crab.png"></image>
+        <text class="post-content">{{item.title}}</text>
         <view class="post-like">
             <image class="post-like-image" src="/images/icon/chat.png"></image>
-            <text class="post-like-font">92</text>
+            <text class="post-like-font">{{item.collect_num}}</text>
             <image class="post-like-image" src="/images/icon/view.png"></image>
-            <text class="post-like-font">65</text>
+            <text class="post-like-font">{{item.view_num}}</text>
         </view>
     </view>
-     <view class="post-container">
-        <view class="post-author-date">
-            <image class="post-author" src="/images/avatar/1.png"></image>
-            <text class="post-date">Nov 25 2017</text>
-        </view>
-        <text class="post-title">正是虾肥蟹壮时</text>
-        <image class="post-image" src="/images/post/crab.png"></image>
-        <text class="post-content">aaaaaaaaaaaaaaaaaaaaaaaaa</text>
-        <view class="post-like">
-            <image class="post-like-image" src="/images/icon/chat.png"></image>
-            <text class="post-like-font">92</text>
-            <image class="post-like-image" src="/images/icon/view.png"></image>
-            <text class="post-like-font">65</text>
-        </view>
-    </view>
+    </block>
 </view>
