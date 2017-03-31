@@ -1,30 +1,19 @@
-<view >
-    <swiper indicator-dots="true" autoplay="true" interval="2000">
-        <swiper-item>
-            <image src="/images/wx.png" ></image>
-        </swiper-item>
-        <swiper-item>
-            <image src="/images/vr.png" ></image>
-        </swiper-item>
-        <swiper-item>
-            <image src="/images/iqiyi.png" ></image>
-        </swiper-item>
-    </swiper>
-    <block wx:for="{{post_key}}" wx:for-item="item">
-     <view class="post-container">
-        <view class="post-author-date">
-            <image class="post-author" src="{{item.author_img}}"></image>
-            <text class="post-date">{{item.date}}</text>
-        </view>
-        <text class="post-title">{{item.title}}</text>
-        <image wx:if="{{item.img_status}}" class="post-image" src="/images/post/crab.png"></image>
-        <text class="post-content">{{item.title}}</text>
-        <view class="post-like">
-            <image class="post-like-image" src="/images/icon/chat.png"></image>
-            <text class="post-like-font">{{item.collect_num}}</text>
-            <image class="post-like-image" src="/images/icon/view.png"></image>
-            <text class="post-like-font">{{item.view_num}}</text>
-        </view>
+<import src="post-item/post-item-template.wxml" />
+<view>
+  <swiper indicator-dots="true" autoplay="true" interval="2000">
+    <swiper-item>
+      <image src="/images/wx.png"></image>
+    </swiper-item>
+    <swiper-item>
+      <image src="/images/vr.png"></image>
+    </swiper-item>
+    <swiper-item>
+      <image src="/images/iqiyi.png"></image>
+    </swiper-item>
+  </swiper>
+  <block wx:for="{{post_key}}" wx:key="unique" wx:for-item="item">
+    <view catchtap="onPostTap" data-postId="{{item.postId}}">
+      <template is="postItem" data="{{...item}}"></template>
     </view>
-    </block>
+  </block>
 </view>
