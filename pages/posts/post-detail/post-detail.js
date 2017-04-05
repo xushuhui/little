@@ -1,10 +1,12 @@
 var postData = require('../../../data/posts-data.js');
+var app = getApp();
 Page({
     data:
     {
-
+        isPlayingMusic: false
     },
     onLoad: function (option) {
+
         var postid = option.postid;
         this.data.currentpostid = postid;
         this.setData(postData.postList[postid]);//加载数据
@@ -18,6 +20,31 @@ Page({
             postCollected[postid] = false;
             wx.setStorageSync('post_collected', postCollected);
         }
+
+        if (app.globalData.g_isPlayingMusic &&  app.globalData.g_currentMusicPostId === postid)         {
+            this.setData({
+                isPlayingMusic: true
+            });
+        }
+        this.setMusicMonitor();
+
+    },
+    //监听音乐播放事件
+    setMusicMonitor: function () {
+        var that = this;
+        wx.onBackgroundAudioPlay(function () {
+            that.setData({
+                isPlayingMusic: true
+            });
+            app.globalData.g_isPlayingMusic = true;
+            app.globalData.g_currentMusicPostId = that.data.currentpostid;
+        });
+        wx.onBackgroundAudioPause(function () {
+            that.setData({
+                isPlayingMusic: false
+            });
+            app.globalData.g_isPlayingMusic = false;
+        });
     },
     // onColleeectionTap: function (event) {
     //     var postCollected = wx.getStorageSync('post_collected');
@@ -55,7 +82,7 @@ Page({
         postsCollected[this.data.currentpostid] = postCollected;
         this.showToast(postsCollected, postCollected);
     },
-    showModal: function (postCollected, collected, ) {
+    showModal: function (postCollected, collected) {
         var that = this;
         wx.showModal({
             title: "收藏",
@@ -74,7 +101,7 @@ Page({
             }
         });
     },
-
+    //弹窗
     showToast: function (postCollected, collected) {
         // 更新文章是否的缓存值
         wx.setStorageSync('post_collected', postCollected);
@@ -90,7 +117,7 @@ Page({
     },
     //分享
     onShareTap: function (event) {
-        
+
         var itemList = [
             "分享给微信好友",
             "分享到朋友圈",
@@ -109,5 +136,35 @@ Page({
                 });
             }
         });
-    }
+    },
+    //音乐播放
+    onMusicTap: function () {
+        var isPlayingMusic = this.data.isPlayingMusic;
+        var postid = this.data.currentpostid;
+        var currentData = postData.postList[postid];
+        if (isPlayingMusic) {
+            wx.pauseBackgroundAudio({
+
+            })
+            this.setData({
+                isPlayingMusic: false
+            });
+              app.globalData.g_isPlayingMusic = false;
+        } else {
+
+            wx.playBackgroundAudio({
+                dataUrl: currentData.music.url,
+                title: currentData.music.title,
+                coverImgUrl: currentData.music.coverImg,
+
+            });
+            this.setData({
+                isPlayingMusic: true
+            });
+             app.globalData.g_currentMusicPostId = this.data.currentpostid;
+              app.globalData.g_isPlayingMusic = true;
+        }
+
+    },
+
 })
