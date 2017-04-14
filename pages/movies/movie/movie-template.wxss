@@ -1,0 +1,6 @@
+@import "../stars/stars-template.wxss";
+.movie-img{
+	width:200rpx;
+	height:270rpx;
+	padding-top: 20rpx;
+}
