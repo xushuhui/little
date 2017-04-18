@@ -30,13 +30,22 @@ Page({
 
   },
   //滑动加载更多
-  onScrolLower: function (event) {
+  onReachBottom: function (event) {
     var nextUrl = this.data.requestUrl + "?start=" + this.data.totalCount + "&count=20 ";
-  
     util.http(nextUrl, this.processDoubanData);
-
+    wx.showNavigationBarLoading();
 
   },
+  //下拉刷新
+  onPullDownRefresh: function (event) {
+    var refreshUrl = this.data.requestUrl + "?start=0&count=20 ";
+    this.data.movies = {};
+    this.data.isEmpty = true;
+    this.data.totalCount = 0;
+    util.http(refreshUrl, this.processDoubanData);
+    wx.showNavigationBarLoading();
+  },
+
   //处理豆瓣电影数据
   processDoubanData: function (moviesDouban) {
     var movies = [];
@@ -56,8 +65,8 @@ Page({
       movies.push(temp);
     }
     var totalMovies = {};
-    
-     if (!this.data.isEmpty) {
+
+    if (!this.data.isEmpty) {
       totalMovies = this.data.movies.concat(movies);
     }
     else {
@@ -68,7 +77,9 @@ Page({
       movies: totalMovies
     });
 
-   this.data.totalCount += 20;
+    this.data.totalCount += 20;
+    wx.hideNavigationBarLoading();
+    wx.stopPullDownRefresh();
   },
   onReady: function (event) {
     // 页面渲染完成
