@@ -32,6 +32,7 @@ Page({
     //监听音乐播放事件
     setMusicMonitor: function () {
         var that = this;
+        //监听音乐播放
         wx.onBackgroundAudioPlay(function () {
             that.setData({
                 isPlayingMusic: true
@@ -39,12 +40,21 @@ Page({
             app.globalData.g_isPlayingMusic = true;
             app.globalData.g_currentMusicPostId = that.data.currentpostid;
         });
+        //监听音乐暂停
         wx.onBackgroundAudioPause(function () {
             that.setData({
                 isPlayingMusic: false
             });
             app.globalData.g_isPlayingMusic = false;
         });
+        //监听音乐停止
+         wx.onBackgroundAudioStop(function () {
+            that.setData({
+                isPlayingMusic: false
+            });
+            app.globalData.g_isPlayingMusic = false;
+        });
+
     },
     // onColleeectionTap: function (event) {
     //     var postCollected = wx.getStorageSync('post_collected');
