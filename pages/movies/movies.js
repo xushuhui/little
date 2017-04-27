@@ -1,11 +1,15 @@
-var app = getApp();
 var util = require("../../utils/utils.js");
+var app = getApp();
+
 Page({
 
   data: {
     inTheaters: {},
     comingSoon: {},
     top250: {},
+    searchResult: {},
+    containerShow: true,
+    searchPanelShow: false,
   },
   onLoad: function () {
     var inTheatersUrl = app.globalData.doubanBase + "/v2/movie/in_theaters" + "?start=0&count=3";
@@ -45,6 +49,31 @@ Page({
       },
 
     });
+  },
+  //页面切换
+  onCancelImgTap: function (event) {
+    this.setData({
+      containerShow: true,
+      searchPanelShow: false,
+      searchResult: {},
+    });
+  },
+  //页面切换
+  onBindFocus: function (event) {
+
+    this.setData({
+      containerShow: false,
+      searchPanelShow: true
+    })
+
+
+  },
+  //电影搜索
+  onBindBlur: function (event) {
+    var text = event.detail.value;
+    var searchUrl = app.globalData.doubanBase + "/v2/movie/search?q=" + text;
+    this.getMovieListData(searchUrl, "searchResult", "");
+
   },
   //处理豆瓣电影数据
   processDoubanData: function (moviesDouban, settedKey, categoryTitle) {
