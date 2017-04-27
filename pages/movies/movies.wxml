@@ -2,7 +2,7 @@
 <import src="movie-grid/movie-grid-template.wxml" />
 <view class="search">
   <icon type="search" class="search-img" size="13" color="#405f80" />
-  <input type="text" placeholder="电影、速度与激情" placeholder-class="placeholder" auto-focus bindfocus="onBindFocus" bindblur="onBindBlur" bindconfirm="onBindBlur" />
+  <input type="text" placeholder="电影、速度与激情" placeholder-class="placeholder"  bindfocus="onBindFocus" bindblur="onBindBlur" bindconfirm="onBindBlur" />
   <image wx:if="{{searchPanelShow}}" src="/images/icon/xx.png" class="xx-img" bindtap="onCancelImgTap"  ></image>
 </view>
 <view class="container" wx:if="{{containerShow}}">

@@ -21,10 +21,18 @@ Page({
     this.getMovieListData(top250Url, "top250", "豆瓣Top250");
     // 页面渲染完成
   },
+  //加载更多
   onMoreTap: function (event) {
     var category = event.currentTarget.dataset.category;
     wx.navigateTo({
       url: "more-movie/more-movie?category=" + category
+    })
+  },
+  //跳转电影详情
+  onMovieTap: function (event) {
+    var movieId = event.currentTarget.dataset.movieid;
+    wx.navigateTo({
+      url: "movie-detail/movie-detail?id=" + movieId
     })
   },
   //获取豆瓣电影数据
@@ -60,13 +68,10 @@ Page({
   },
   //页面切换
   onBindFocus: function (event) {
-
     this.setData({
       containerShow: false,
       searchPanelShow: true
     })
-
-
   },
   //电影搜索
   onBindBlur: function (event) {
