@@ -44,7 +44,8 @@ Page({
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
       // header: {}, // 设置请求的 header
       header: {
-        'content-type': 'application/aa'
+        'Referer':'www.baidu.com',
+        'content-type': 'application/json'
       },
       success: function (res) {
         console.log(res);
